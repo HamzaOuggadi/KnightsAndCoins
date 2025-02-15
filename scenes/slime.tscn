@@ -1,0 +1,68 @@
+[gd_scene load_steps=10 format=3 uid="uid://dm2asxahe3b3s"]
+
+[ext_resource type="Script" path="res://scripts/slime.gd" id="1_kamuj"]
+[ext_resource type="Texture2D" uid="uid://bpl33g02x31x8" path="res://assets/sprites/slime_green.png" id="1_ofly7"]
+[ext_resource type="PackedScene" uid="uid://c8b8a33uqcqth" path="res://scenes/kill_zone.tscn" id="3_eq0f4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1mafo"]
+atlas = ExtResource("1_ofly7")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnhq3"]
+atlas = ExtResource("1_ofly7")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yerwu"]
+atlas = ExtResource("1_ofly7")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_57a1j"]
+atlas = ExtResource("1_ofly7")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gcell"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1mafo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnhq3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yerwu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_57a1j")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4hf2s"]
+size = Vector2(12, 11)
+
+[node name="Slime" type="Node2D"]
+script = ExtResource("1_kamuj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -12)
+sprite_frames = SubResource("SpriteFrames_gcell")
+autoplay = "default"
+frame = 1
+frame_progress = 0.0486731
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+position = Vector2(0, -6)
+target_position = Vector2(10, 0)
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+position = Vector2(0, -6)
+target_position = Vector2(-11, 0)
+
+[node name="KillZone" parent="." instance=ExtResource("3_eq0f4")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone"]
+position = Vector2(0, -6.5)
+shape = SubResource("RectangleShape2D_4hf2s")
